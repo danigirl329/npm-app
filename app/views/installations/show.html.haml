@@ -1,0 +1,28 @@
+.installations
+  .row
+    .col.s12.l6
+      %h1.header
+        = @installation.locality
+      .installation-info
+        .active
+          Active:
+          = @installation.active
+        .activated
+          Activated On:
+          = @installation.active_at
+      .h4.disorder-header COMMON MENTAL DISORDERS
+      .row.disorder-key
+        .col.s6.m4.l3.disorder-icon.depression depression
+        .col.s6.m4.l3.disorder-icon.anxiety anxiety
+        .col.s6.m4.l3.disorder-icon.bipolar bipolar
+        .col.s6.m4.l3.disorder-icon.adhd adhd
+        .col.s6.m4.l3.disorder-icon.dementia dementia
+        .col.s6.m4.l3.disorder-icon.ocd ocd
+        .col.s6.m4.l3.disorder-icon.ptsd ptsd
+        .col.s6.m4.l3.disorder-icon.schizophrenia schizophrenia
+        .col.s6.m4.l3.disorder-icon.autism autism
+
+    .col.s12.l6
+      .map
+        = map(center: {latlng: [@installation.latitude, @installation.longitude], zoom: 18, zoomControl: false}, markers: @submissions.map{|sub| {latlng: sub.coordinates}}, id: 'map')
+= render :partial => "submissions/form", :locals => { :submission => Submission.new, :installation => @installation }

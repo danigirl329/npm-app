@@ -1,7 +1,89 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# Array of sample relationships
+RELATIONSHIPS = %W(self relation)
+
+User.create!(
+  email: 'member@contextual.io',
+  password: 'helloworld'
+)
+
+Installation.create!(
+  locality: 'Oakland',
+  active: true,
+  active_at: '2017-01-01',
+  latitude: 40.4420,
+  longitude: -79.9625,
+)
+
+Installation.create!(
+  locality: 'Sewickley',
+  active: true,
+  active_at: '2017-01-01',
+  latitude: 40.5365,
+  longitude: -80.1844,
+)
+
+# Parsing illnesses csv to seed db
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'illnesses.csv'))
+csv = CSV.parse(csv_text, :headers => true)
+csv.each do |row|
+  i = Illness.new
+  i.name = row['name']
+  i.body = row['body']
+  i.save!
+end
+
+illnesses = Illness.all
+
+# Creating random submissions/anecdotes/researches
+20.times do |n|
+  ip = "96.236.157.31"
+  Submission.create!(
+    illness_id: illnesses.sample.id,
+    cookie: "thisismycookie#{rand(10...1000000)}",
+    relationship: RELATIONSHIPS.sample,
+    ip_address: ip,
+    locality: "Sewickley",
+    zip_code: "15222",
+    latitude: (40.5365 - Random.new.rand(0.0001...0.0003)),
+    longitude: (-80.1844 + Random.new.rand(0.0001...0.0003))
+  )
+end
+
+20.times do |n|
+  ip = "96.236.157.31"
+  Submission.create!(
+    illness_id: illnesses.sample.id,
+    cookie: "thisismycookie#{rand(10...1000000)}",
+    relationship: RELATIONSHIPS.sample,
+    ip_address: ip,
+    locality: "Sewickley",
+    zip_code: "15222",
+    latitude: (40.5365 + Random.new.rand(0.0001...0.0003)),
+    longitude: (-80.1844 - Random.new.rand(0.0001...0.0003))
+  )
+end
+
+submissions = Submission.all
+
+20.times do |n|
+  Anecdote.create!(
+    body: Faker::Hipster.sentence,
+    submission_id: submissions.sample.id
+  )
+end
+
+20.times do |n|
+  Research.create!(
+    gender: Faker::Demographic.sex,
+    age: Faker::Number.between(18, 90),
+    race: Faker::Demographic.race,
+    occupation: Faker::Job.title,
+    submission_id: submissions.sample.id
+  )
+end
+
+puts "#{User.count} users created"
+puts "#{Submission.count} submissions created"
+puts "#{Illness.count} illnesses created"
+puts "#{Anecdote.count} anecdotes created"
+puts "#{Research.count} researches created"
