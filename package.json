@@ -1,5 +1,28 @@
 {
   "name": "npm-app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "js-cookie": "^2.1.4"
+  },
+  "description": "[![Build Status](https://travis-ci.org/ContextualCamouflage/contextual-camoflage.svg?branch=master)](https://travis-ci.org/ContextualCamouflage/contextual-camoflage)",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danigirl329/npm-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danigirl329/npm-app/issues"
+  },
+  "homepage": "https://github.com/danigirl329/npm-app#readme"
 }

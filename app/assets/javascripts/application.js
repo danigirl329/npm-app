@@ -15,4 +15,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require burgermenu
+//= require js-cookie
 //= require_tree .
